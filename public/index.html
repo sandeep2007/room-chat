@@ -159,7 +159,10 @@
         channelId = 0;
         senderId = 0;
 
-
+        function decodeUnit8Array(uint8array) {
+            var string = new TextDecoder("utf-8").decode(uint8array);
+            return string;
+        }
 
         function createSocket(url, path, token) {
             let socket = io.connect(url, {
@@ -236,9 +239,10 @@
 
         function logout() {
 
+            sessionStorage.clear()
             connection.socket.disconnect();
             connection.socket = null;
-            sessionStorage.clear()
+
             $('#user-list').empty();
             $('#login-form').show();
             $('#logout-btn').hide();
@@ -404,7 +408,7 @@
         function receiveMessage(data) {
 
             if (channelId == data.channelId) {
-                var elMsg = `<div class="chat-msg-receiver message-item"><small>${data.userName}</small><br/>${data.message}<br/><small>${data.date_created}</small></div>`;
+                var elMsg = `<div class="chat-msg-receiver message-item"><small>${data.userName}</small><br/>${decodeUnit8Array(data.message)}<br/><small>${data.date_created}</small></div>`;
                 $('#chat-list').append(elMsg);
                 userTypingHide();
                 scrollChatDown();
@@ -435,7 +439,7 @@
 
         function renderChatList(chatList) {
             var chatEl = chatList.map((data) => {
-                return `<div class="chat-msg-receiver message-item"><small>${data.userName}</small><br/>${data.message}<br/><small>${data.date_created}</small></div>`;
+                return `<div class="chat-msg-receiver message-item"><small>${data.userName}</small><br/>${decodeUnit8Array(data.message)}<br/><small>${data.date_created}</small></div>`;
             });
             $('#chat-list').html(chatEl);
             scrollChatDown();

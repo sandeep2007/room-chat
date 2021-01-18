@@ -88,7 +88,7 @@ io.on('connection', async (socket) => {
     socket.on('sendMessage', (data) => {
 
         userHandler.userChatInput(data, (err, chatData) => {
-            io.to(data.channelId).emit('receiveMessage', Object.assign({ userName: socket.userData.name }, chatData));
+            io.to(data.channelId).emit('receiveMessage', chatData);
         });
     });
 

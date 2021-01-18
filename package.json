@@ -1,5 +1,5 @@
 {
-  "name": "Livechat",
+  "name": "Roomchat",
   "version": "1.0.0",
   "description": "Websocket Online users example with Express, Mysql and NodeJs",
   "main": "server.js",
